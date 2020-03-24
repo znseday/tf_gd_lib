@@ -3,7 +3,8 @@
 ## Tabulated Function And Gradient Descent Math Lib
 
 This library was written by Sergey Tsynikin as a coursework for OTUS courses.
-This library is published under the Boost Software License, Version 1.0. So please make sure you agree with all terms of it before start using the library.
+This library is published under the Boost Software License, Version 1.0.
+So please make sure you agree with all terms of it before start using the library.
 See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
 
 ##### In Russian language
