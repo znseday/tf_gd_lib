@@ -15,7 +15,6 @@
 #include <tuple>
 
 #include <iostream>
-#include <fstream>
 
 using namespace std;
 using namespace tf_gd_lib;
@@ -96,10 +95,6 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tabulated_function_test)
 
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tf_load_and_spline_test)
 {
-	ofstream f("QWERTY.txt");
-	f << "qwerty" << endl;
-	f.close();
-
 	TableFunction tf;
 	BOOST_CHECK( tf.LoadFromFile("test_data.txt") );
 
