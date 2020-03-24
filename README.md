@@ -3,7 +3,9 @@
 ## Tabulated Function And Gradient Descent Math Lib
 
 This library was written by Sergey Tsynikin as a coursework for OTUS courses.
+
 This library is published under the Boost Software License, Version 1.0.
+
 So please make sure you agree with all terms of it before start using the library.
 See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
 
@@ -32,7 +34,7 @@ Also, this class contains a few methods for common tasks, for example, to sort, 
 Anyway, internal data must be sorted before get started to use.
 
 This class uses binary search for random access (a value at any point) that has logarithmic complexity O(log(n)).
-However, the last point which be used are cashed, so sequences access has constant time complexity O(1) in most of cases and linear complexity ( O(n-i) or O(i) ) in the worst cases where i is an index of a cashed point.
+However, the last point which be used are cashed, so sequences access has constant time complexity O(1) in most of cases and linear complexity (O(n-i) or O(i)) in the worst cases where i is an index of a cashed point.
 A sequences access can be used only with linear interpolation and extrapolation. A sequences access can be used only with linear interpolation and extrapolation.
 
 Cubic spline calculations can be used only for random access.
