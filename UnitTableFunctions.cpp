@@ -121,7 +121,7 @@ double TableFunction::GetValFromLeftX(double x) const
 		return LineInterpol(x, Points[0].x, Points[1].x, Points[0].y, Points[1].y);
 	}
 
-	int n = min(iCash+2, Points.size());
+	size_t n = min(iCash+2, Points.size());
 
 	for (size_t i = 1; i < n; ++i)
 	{
@@ -198,10 +198,12 @@ void TableFunction::CreateDemoFunction(size_t n, double a, double dx, std::funct
 
 void TableFunction::KillDuplicates()
 {
-	unique(Points.begin(), Points.end(), [](const SinglePoint &a, const SinglePoint &b)
+	auto it_last = unique(Points.begin(), Points.end(), [](const SinglePoint &a, const SinglePoint &b)
 		{
 			return a.x == b.x;
 		});
+
+	Points.erase(it_last, Points.end());
 }
 //---------------------------------------------------------------------------
 

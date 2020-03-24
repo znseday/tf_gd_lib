@@ -63,7 +63,7 @@ GradErrorType GradDescent::Go()
 
     vector<double> old_p(ParamsCount);
 
-    size_t PointsCount = SrcFunction.Size();
+    //size_t PointsCount = SrcFunction.Size();
 
     double OldCost;
     double dCost;
@@ -171,7 +171,7 @@ GradErrorType GradDescent::Go()
         if (LastIters % CallBackFreq == 0)
         {
             TimeEnd = ClockType::now();
-            LastTime = chrono::duration_cast<chrono::milliseconds>(TimeEnd - TimeStart).count();
+            LastTime = (double)chrono::duration_cast<chrono::milliseconds>(TimeEnd - TimeStart).count();
             LastTime /= 1.0e3;
 
             if (LastTime > MaxTime)
@@ -190,7 +190,7 @@ GradErrorType GradDescent::Go()
     while ( any_of(Cur_Eta.begin(), Cur_Eta.end(), [this](double v){return v > Min_Eta;}) );
 
     TimeEnd = ClockType::now();
-    LastTime = chrono::duration_cast<chrono::milliseconds>(TimeEnd - TimeStart).count();
+    LastTime = (double)chrono::duration_cast<chrono::milliseconds>(TimeEnd - TimeStart).count();
     LastTime /= 1.0e3;
 
     IsCalculating = false;

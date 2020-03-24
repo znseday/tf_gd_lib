@@ -49,12 +49,12 @@ bool СubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
 
 	Splines[n-1].c = (F - A * beta[n-2]) / (C + A * alpha[n-2]);
 
-	for (int i = n - 2; i > 0; --i)
+	for (long long i = n - 2; i > 0; --i)
 		Splines[i].c = alpha[i] * Splines[i+1].c + beta[i];
 
-	for (int i = n - 1; i > 0; --i)
+	for (long long i = n - 1; i > 0; --i)
 	{
-		double h_i = Points[i].x - Points[i-1].x;
+		h_i = Points[i].x - Points[i-1].x;
 		Splines[i].d = (Splines[i].c - Splines[i-1].c) / h_i;
 		Splines[i].b = h_i * (2.0 * Splines[i].c + Splines[i-1].c) / 6.0 + (Points[i].y - Points[i-1].y) / h_i;
 	}

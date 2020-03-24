@@ -15,7 +15,7 @@
 #include <tuple>
 
 #include <iostream>
-
+#include <fstream>
 
 using namespace std;
 using namespace tf_gd_lib;
@@ -35,12 +35,20 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_boost_test)
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tabulated_function_test)
 {
 	TableFunction tf;
-	tf.CreateDemoFunction(401, -10, 0.05);
+	tf.CreateDemoFunction(201, -1, 0.01);
 
-	cout << tf(-10.03) << endl;
-	BOOST_CHECK( CmpFunc(tf(-10.03),  0.22891692244, 0.0000001) ); // left extrapolation
-	BOOST_CHECK( CmpFunc(tf( 10.04), -0.13059085494, 0.0000001) ); // right extrapolation
-	BOOST_CHECK( CmpFunc(tf(  4.01),  0.67480799289, 0.0000001) ); // interpolation
+	const double e = 0.005; // accuracy for linear interpolation/extrapolation testing
+
+	cout << "tf(-1.003) = " << tf(-1.003) << endl;
+	BOOST_CHECK( CmpFunc(tf(-1.003),  0.5689446, e) ); // left extrapolation
+
+	cout << "tf(1.004) = " << tf(1.004) << endl;
+	BOOST_CHECK( CmpFunc(tf (1.004), -0.5771398, e) ); // right extrapolation
+
+	cout << "tf(0.117) = " << tf(0.117) << endl;
+	BOOST_CHECK( CmpFunc(tf( 0.117),  0.9207505, e) ); // interpolation
+
+	cout << "tf(0) = " << tf(0) << endl;
 	BOOST_CHECK( CmpFunc(tf(0), 0, 0.00000000001) );               // center point
 	
 	tf.ClearAll();
@@ -59,9 +67,11 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tabulated_function_test)
 	tf.KillDuplicates();
 	tf.CalcStat();
 
-	cout << "size = " << tf.Size();
-	BOOST_CHECK( tf.Size() == 4 );
+	
+	cout << "size = " << tf.Size() << endl;
+	BOOST_CHECK( tf.Size() == 4 ); // one duplicate was removed
 
+	cout << "x\ty" << endl;
 	for (size_t i = 0; i < tf.Size(); ++i)
 	{
 		auto point = tf[i];
@@ -78,23 +88,32 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tabulated_function_test)
 
 	BOOST_CHECK( tf.Get_x_ForMinY() == 1);
 	BOOST_CHECK( tf.Get_x_ForMaxY() == 0);
-	BOOST_CHECK( tf.Get_i_ForMinY() == 1);
-	BOOST_CHECK( tf.Get_i_ForMaxY() == 2);
+	BOOST_CHECK( tf.Get_i_ForMinY() == 2); // considering that sort was done
+	BOOST_CHECK( tf.Get_i_ForMaxY() == 1); // considering that sort was done
 
 }
 
 
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tf_load_and_spline_test)
 {
+	ofstream f("QWERTY.txt");
+	f << "qwerty" << endl;
+	f.close();
+
 	TableFunction tf;
 	BOOST_CHECK( tf.LoadFromFile("test_data.txt") );
 
 	BOOST_CHECK( tf.BuildSpline() );
 
-	const double e = 1e-3;
-	BOOST_CHECK( CmpFunc(tf.Spline(-0.185), 1.930, e) ); // at random point
-	BOOST_CHECK( CmpFunc(tf.Spline(0.707), -0.335, e) ); // at random point
+	const double e = 0.001; // 1e-3
+	BOOST_CHECK( CmpFunc(tf.Spline(-0.185), 1.930, e) ); // at some random point
+	BOOST_CHECK( CmpFunc(tf.Spline(0.707), -0.335, e) ); // at some random point
 	BOOST_CHECK( CmpFunc(tf.Spline(0.5), -0.250, e) );   // at existing point
+
+	BOOST_CHECK( tf.Spline(-0.185) != tf(-0.185) ); // at some random point
+	BOOST_CHECK( tf.Spline(0.707)  != tf( 0.707) ); // at some random point
+
+	BOOST_CHECK( tf.Spline(0.5) == tf(0.5) );   // at existing point
 }
 
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_gradient_descent_test)
