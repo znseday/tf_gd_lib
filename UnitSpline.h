@@ -21,7 +21,7 @@ struct SinglePoint
 	SinglePoint(double _x, double _y) : x(_x), y(_y) {}
 };
 
-class СubicSpline
+class CubicSpline
 {
 private:
 

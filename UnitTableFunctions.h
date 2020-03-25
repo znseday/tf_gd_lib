@@ -109,7 +109,7 @@ public:
 
 	double GetBackX() { return Points.back().x; }
 
-	СubicSpline Spline;
+	CubicSpline Spline;
 	bool BuildSpline();
 
 };

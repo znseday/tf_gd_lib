@@ -10,7 +10,7 @@
 using namespace std;
 using namespace tf_gd_lib;
 
-bool СubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
+bool CubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
 {
     size_t n = Points.size();
 
@@ -61,7 +61,7 @@ bool СubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
 }
 //---------------------------------------------------------------------------
 
-double СubicSpline::operator()(double x) const
+double CubicSpline::operator()(double x) const
 {
 	if (Splines.empty())  // If splines don't exist - return NaN
 		return std::numeric_limits<double>::quiet_NaN();
