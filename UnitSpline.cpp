@@ -15,7 +15,7 @@ bool CubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
 {
     size_t n = Points.size();
 
-	if (n < 3) // Или просто if и игнор (return), если значения плохие?  или вообще возвращать bool?????
+	if (n < 3) 
 		return false;
 
 	Splines.clear();
@@ -59,6 +59,8 @@ bool CubicSpline::BuildSpline(const std::vector<SinglePoint> &Points)
 		Splines[i].d = (Splines[i].c - Splines[i-1].c) / h_i;
 		Splines[i].b = h_i * (2.0 * Splines[i].c + Splines[i-1].c) / 6.0 + (Points[i].y - Points[i-1].y) / h_i;
 	}
+
+	return true;
 }
 //---------------------------------------------------------------------------
 
