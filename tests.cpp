@@ -89,9 +89,7 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tabulated_function_test)
 	BOOST_CHECK( tf.Get_x_ForMaxY() == 0);
 	BOOST_CHECK( tf.Get_i_ForMinY() == 2); // considering that sort was done
 	BOOST_CHECK( tf.Get_i_ForMaxY() == 1); // considering that sort was done
-
 }
-
 
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_tf_load_and_spline_test)
 {
