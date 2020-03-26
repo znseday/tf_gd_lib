@@ -21,13 +21,13 @@ endif()
 
 #add_executable(tf_gd_lib_cli main.cpp UnitSpline.h UnitTableFunctions.h UnitGradDescent.h)
 
-#add_library(tf_gd_lib SHARED UnitSpline.h UnitSpline.cpp 
-#                             UnitTableFunctions.h UnitTableFunctions.cpp 
-#                             UnitGradDescent.h UnitGradDescent.cpp)
-
-add_library(tf_gd_lib UnitSpline.h UnitSpline.cpp 
+add_library(tf_gd_lib SHARED UnitSpline.h UnitSpline.cpp 
                              UnitTableFunctions.h UnitTableFunctions.cpp 
                              UnitGradDescent.h UnitGradDescent.cpp)
+
+#add_library(tf_gd_lib UnitSpline.h UnitSpline.cpp 
+#                             UnitTableFunctions.h UnitTableFunctions.cpp 
+#                             UnitGradDescent.h UnitGradDescent.cpp)
 
 add_executable(tf_gd_lib_tests tests.cpp UnitSpline.h 
                                          UnitTableFunctions.h 
