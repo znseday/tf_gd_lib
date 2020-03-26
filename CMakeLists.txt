@@ -59,7 +59,7 @@ target_link_libraries(tf_gd_lib_tests
 	tf_gd_lib
 )
 
-install(TARGETS tf_gd_lib LIBRARY DESTINATION bin)
+install(TARGETS tf_gd_lib LIBRARY DESTINATION lib)
 #install(TARGETS tf_gd_lib RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
