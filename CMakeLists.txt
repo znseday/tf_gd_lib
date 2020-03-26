@@ -21,18 +21,24 @@ endif()
 
 #add_executable(tf_gd_lib_cli main.cpp UnitSpline.h UnitTableFunctions.h UnitGradDescent.h)
 
-add_library(tf_gd_lib SHARED UnitSpline.h UnitSpline.cpp 
+#add_library(tf_gd_lib SHARED UnitSpline.h UnitSpline.cpp 
+#                             UnitTableFunctions.h UnitTableFunctions.cpp 
+#                             UnitGradDescent.h UnitGradDescent.cpp)
+
+add_library(tf_gd_lib UnitSpline.h UnitSpline.cpp 
                              UnitTableFunctions.h UnitTableFunctions.cpp 
                              UnitGradDescent.h UnitGradDescent.cpp)
 
-add_executable(tf_gd_lib_tests tests.cpp UnitSpline.h UnitTableFunctions.h UnitGradDescent.h)
+add_executable(tf_gd_lib_tests tests.cpp UnitSpline.h 
+                                         UnitTableFunctions.h 
+                                         UnitGradDescent.h)
 
 # add tf_gd_lib_cli if it will be used
 if(WIN32 OR WIN64)
     set_target_properties(tf_gd_lib tf_gd_lib_tests PROPERTIES
             CXX_STANDARD 17
             CXX_STANDARD_REQUIRED ON
-            COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra")
+            COMPILE_OPTIONS "/W4")
 else()
     set_target_properties(tf_gd_lib tf_gd_lib_tests PROPERTIES
             CXX_STANDARD 17
@@ -46,13 +52,11 @@ endif()
 #    tf_gd_lib
 #)
 
-#if(WIN32 OR WIN64)
-	set_target_properties(tf_gd_lib_tests PROPERTIES
-		COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-		INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
-	)
-#endif()
 
+set_target_properties(tf_gd_lib_tests PROPERTIES
+	COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+	INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+)
 
 target_link_libraries(tf_gd_lib_tests
     ${Boost_LIBRARIES}

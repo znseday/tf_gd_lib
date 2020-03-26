@@ -18,7 +18,6 @@
 namespace tf_gd_lib
 {
 
-
 inline double LineInterpol(double x, double x1, double x2, double y1, double y2);
 inline double LineInterpolSafeMiddleVal(double x, double x1, double x2, double y1, double y2);
 
@@ -37,19 +36,11 @@ protected:
 
 	std::string Name;
 
-	mutable size_t iCash = 0;
+	mutable size_t iCache = 0;
 
 public:
 	TableFunction() = default;
 	~TableFunction() = default;
-
-	//	TableFunction(const TableFunction &) = delete;
-	//	TableFunction & operator=(const TableFunction &) = delete;
-	//
-	//	TableFunction(TableFunction &&) = delete;
-	//  TableFunction & operator=(TableFunction &&) = delete;
-
-		// is it ok to do default?
 
 	TableFunction(const TableFunction&) = default;
 	TableFunction& operator=(const TableFunction&) = default;
@@ -60,10 +51,10 @@ public:
 
 	size_t Size() const { return Points.size(); }
 
-	double GetX(size_t i) const { iCash = i; return Points[i].x; };
-	double GetY(size_t i) const { iCash = i; return Points[i].y; };
+	double GetX(size_t i) const { iCache = i; return Points[i].x; };
+	double GetY(size_t i) const { iCache = i; return Points[i].y; };
 
-	std::tuple<double, double> operator[](size_t i);  // reference?
+	std::tuple<double &, double &> operator[](size_t i);
 
 	void SetPointByNumber(size_t i, const std::tuple<double, double>& point);
 	void SetValAtPoint(size_t i, double y);
@@ -97,8 +88,7 @@ public:
 	static double TestFunc(double x) { return std::sin(10.0 * x); }
 
 	void CreateDemoFunction(size_t n, double a, double dx,
-		std::function<double(double)> f = TestFunc /* = std::sin*/, const std::string& _name = "DemoFunc");
-	                                                   // ????
+		std::function<double(double)> f = TestFunc /* = std::sin*/, const std::string& _name = "DemoFunc");	                                                   
 
 	void KillDuplicates();
 	void Sort();

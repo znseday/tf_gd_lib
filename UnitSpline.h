@@ -13,7 +13,6 @@
 namespace tf_gd_lib
 {
 
-
 struct SinglePoint
 {
 	double x = 0;

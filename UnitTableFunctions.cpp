@@ -36,12 +36,10 @@ inline double tf_gd_lib::LineInterpolSafeMiddleVal(double x, double x1, double x
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-std::tuple<double,double> TableFunction::operator[](size_t i)
+std::tuple<double &,double &> TableFunction::operator[](size_t i)
 {
-	iCash = i;
-	// return a copy
-	// could we return a reference?
-	return make_tuple(Points[i].x, Points[i].y);
+	iCache = i;
+	return make_tuple(ref(Points[i].x), ref(Points[i].y));
 }
 //---------------------------------------------------------------------------
 
@@ -59,19 +57,19 @@ double TableFunction::GetValByBSearchFromX(double x) const
 
 	if (it == Points.begin())
 	{
-		iCash = 0;
+		iCache = 0;
 
 		return LineInterpol(x, it->x, (it+1)->x, it->y, (it+1)->y);
 	}
 	else if (it == Points.end())
 	{
-		iCash = Points.size() - 1;
+		iCache = Points.size() - 1;
 
 		return LineInterpol(x, (it-2)->x, (it-1)->x, (it-2)->y, (it-1)->y);
 	}
 	else
 	{
-		iCash = distance(Points.begin(), it) - 1;
+		iCache = distance(Points.begin(), it) - 1;
 
 		return LineInterpol(x, (it-1)->x, it->x, (it-1)->y, it->y);
 	}
@@ -86,22 +84,22 @@ double TableFunction::GetValFromRightX(double x) const
 		return 0;
 	}
 
-	if (x < Points[iCash].x)
+	if (x < Points[iCache].x)
 	{
-		return Points[iCash].y;  // Or, as an option, to do left extrapolation
+		return Points[iCache].y;  // Or, as an option, to do left extrapolation
 	}
 
-	for (size_t i = iCash; i < Points.size(); ++i)
+	for (size_t i = iCache; i < Points.size(); ++i)
 	{
 		if (x < Points[i].x)   // Interpolation
 		{
-			iCash = i-1;
+			iCache = i-1;
 			return LineInterpol(x, Points[i-1].x, Points[i].x, Points[i-1].y, Points[i].y);
 		}
 	}
 
 	// Right Extrapolation 
-	iCash = Points.size()-1;
+	iCache = Points.size()-1;
 	return LineInterpol(x, Points[Points.size()-2].x, Points[Points.size()-1].x,
 						   Points[Points.size()-2].y, Points[Points.size()-1].y);
 
@@ -117,22 +115,22 @@ double TableFunction::GetValFromLeftX(double x) const
 
 	if (x < Points[0].x)       // Left Extrapolation
 	{
-		iCash = 0;
+		iCache = 0;
 		return LineInterpol(x, Points[0].x, Points[1].x, Points[0].y, Points[1].y);
 	}
 
-	size_t n = min(iCash+2, Points.size());
+	size_t n = min(iCache +2, Points.size());
 
 	for (size_t i = 1; i < n; ++i)
 	{
 		if (x < Points[i].x)   // Interpolation
 		{
-			iCash = i-1;
+			iCache = i-1;
 			return LineInterpol(x, Points[i-1].x, Points[i].x, Points[i-1].y, Points[i].y);
 		}
 	}
 
-	return Points[iCash].y;   // Or, as an option, to do right extrapolation
+	return Points[iCache].y;   // Or, as an option, to do right extrapolation
 }
 //---------------------------------------------------------------------------
 
@@ -146,7 +144,7 @@ void TableFunction::ClearAll()
 	x_ForMinY = x_ForMaxY = 0;
 	i_ForMinY = i_ForMaxY = 0;
 
-    iCash = 0;
+    iCache = 0;
 
 	Name.clear();
 

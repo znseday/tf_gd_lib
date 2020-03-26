@@ -17,7 +17,7 @@
 
 #include <iostream>
 
-#include <fstream>
+//#include <fstream>
 
 using namespace std;
 using namespace tf_gd_lib;
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_SUITE(tf_gd_lib_test_suite)
 
 BOOST_AUTO_TEST_CASE(tf_gd_lib_test_boost_test)
 {
-	cerr << "------------------> TEST TEST TEST <------------------" << endl;
+	cout << "------------------> TEST TEST TEST <------------------" << endl;
     BOOST_CHECK(1 > 0);
 }
 //---------------------------------------------------------------------------
@@ -496,7 +496,7 @@ BOOST_AUTO_TEST_CASE(tf_gd_lib_test_gd_two_gaussian_distribution_test)
 	BOOST_CHECK(CmpFunc(params[4], 8900, 0.05));  // close to parameters of SrcFunction
 	BOOST_CHECK(CmpFunc(params[5], 85,   0.05));  // close to parameters of SrcFunction
 	BOOST_CHECK(CmpFunc(params[6], -0.1, 0.05));  // close to parameters of SrcFunction
-	BOOST_CHECK(CmpFunc(params[7], 1200, 1));     // close to parameters of SrcFunction
+	BOOST_CHECK(CmpFunc(params[7], 1200, 10));    // close to parameters of SrcFunction
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
