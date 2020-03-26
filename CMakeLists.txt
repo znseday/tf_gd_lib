@@ -46,12 +46,12 @@ endif()
 #    tf_gd_lib
 #)
 
-if(WIN32 OR WIN64)
+#if(WIN32 OR WIN64)
 	set_target_properties(tf_gd_lib_tests PROPERTIES
 		COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
 		INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 	)
-endif()
+#endif()
 
 
 target_link_libraries(tf_gd_lib_tests
