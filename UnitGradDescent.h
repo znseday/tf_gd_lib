@@ -19,6 +19,8 @@ namespace tf_gd_lib
 using DstFunctionType = std::function<double(double x, const std::vector<double>&)>;
 using CallbackType = std::function<void()>;
 
+using UserTargetFunctionType = std::function<double(const std::vector<double>&)>;
+
 using ClockType = std::chrono::steady_clock;
 
 enum class GradErrorType
@@ -58,6 +60,9 @@ protected:
 
 	TableFunction SrcFunction;
 	DstFunctionType DstFunction = nullptr; // is it ok to use nullptr for std::function?
+	UserTargetFunctionType UserTargetFunction = nullptr;
+	
+	bool IsUseUserTargetFunction = false;
 
 	double LastCost = -1.0;
 
@@ -126,6 +131,9 @@ public:
 
 	void SetCallback(const CallbackType& _Callback) { Callback = _Callback; }
 
+	void SetUseUserTargetFunction(const UserTargetFunctionType& _UserTargetFunction) { UserTargetFunction = _UserTargetFunction; }
+	void SetIsUseUserTargetFunction(bool _IsUseUserTargetFunction) { IsUseUserTargetFunction = _IsUseUserTargetFunction; }
+	
 	double GetY(size_t i) const
 	{
 		if (DstFunction && SrcFunction.Size())

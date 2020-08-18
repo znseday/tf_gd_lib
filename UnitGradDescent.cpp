@@ -14,13 +14,20 @@ using namespace tf_gd_lib;
 void GradDescent::CalcCost()
 {
     LastCost = 0;
-    double dfC;
 
-    for (size_t i = 0; i < SrcFunction.Size(); ++i)
-    {
-        dfC = SrcFunction.GetY(i) - DstFunction(SrcFunction.GetX(i), Params);
-        LastCost += dfC*dfC;
-    }
+	if (IsUseUserTargetFunction)
+	{
+		LastCost = UserTargetFunction(Params);
+	}
+	else
+	{
+		double dfC;
+		for (size_t i = 0; i < SrcFunction.Size(); ++i)
+		{
+			dfC = SrcFunction.GetY(i) - DstFunction(SrcFunction.GetX(i), Params);
+			LastCost += dfC * dfC;
+		}
+	}
 }
 //---------------------------------------------------------------------------
 
